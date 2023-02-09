@@ -61,4 +61,4 @@ print(f'Different case letters: {diff_case_letters}')
 if similarity >= 1:
     print('100%')
 else:
-    print(f"{similarity * 100}%")
+    print(f'{similarity * 100}%')
