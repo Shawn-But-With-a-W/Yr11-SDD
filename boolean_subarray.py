@@ -5,7 +5,7 @@ def find_substring(s: str, substring_length: int):
     
     # Loop through and check all substrings
     for i in range(len(s) - substring_length + 1):
-        substring = s[i : i+substring_length] # Non-inclusive
+        substring = s[i : i+substring_length] # Non-inclusive for end
         if substring.count('1') == substring_length/2:
             return substring
 
