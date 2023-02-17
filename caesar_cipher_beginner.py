@@ -30,5 +30,7 @@ def encrypt(s: str, shift: int) -> str:
 
     return ''.join(output)
 
+s = input('Provide a Caesar cipher string: ')
+shift = input('Provide shift: ')
 
-print(encrypt('xyZ', 1))
+print(encrypt(s, shift))
