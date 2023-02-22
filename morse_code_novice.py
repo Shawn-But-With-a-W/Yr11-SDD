@@ -1,3 +1,6 @@
+import winsound
+import time
+
 def text_to_morse(s:str):
     MORSE_CODE_DICT = {
         'A':'.-', 'B':'-...',
@@ -33,4 +36,11 @@ text = input('Input a text: ')
 
 print(text_to_morse(text))
 
- 
+for symbol in text_to_morse(text):
+    if symbol == '-':
+        winsound.Beep(3000, 1200)
+        time.sleep(2)
+    elif symbol == '.':
+        winsound.Beep(3000, 400)
+    elif symbol == ' ':
+        time.sleep(0.4)
