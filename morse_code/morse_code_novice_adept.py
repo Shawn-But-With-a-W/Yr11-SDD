@@ -1,5 +1,5 @@
 import winsound
-import time
+import wave
 
 def morse_to_text(s:str):
     MORSE_CODE_DICT = {
@@ -30,7 +30,15 @@ def morse_to_text(s:str):
     return text
 
 
-morse = input('Input morse code: ').split()
-print(morse)
+audio = wave.open('Morse_test_file.wav', 'rb')
 
-print(morse_to_text(morse))
+length = audio.getnframes()
+
+data_list = []
+
+for frame in range(length):
+    audiodata = audio.readframes(1)
+    data_list.append(audiodata.decode()) # Produces an error idk what happened
+print(data_list)
+
+audio.close()    
