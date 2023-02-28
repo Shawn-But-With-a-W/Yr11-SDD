@@ -2,6 +2,7 @@ class Wordle:
     def __init__(self):
         pass
 
+
     def getGuess(self, words):
         valid = False
         
