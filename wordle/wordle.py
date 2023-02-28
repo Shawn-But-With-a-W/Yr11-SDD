@@ -7,7 +7,7 @@ class Wordle:
         valid = False
         
         while valid == False:
-            guess = input('\n Guess: ')
+            guess = input('\nGuess: ')
 
             if guess in words:
                 valid = True
