@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+	<TITLE>Year 11 SDD</TITLE>
+	<STYLE>
+		
+	</STYLE>
+</HEAD>
+<BODY>
+	<SCRIPT>
+		var nums = [];
+		function addNum() {
+			num = parseInt(document.getElementById("n1").value)
+			if (isNaN(num)) {
+				alert("Input must be a number!")
+			}
+			else {
+				nums.push(num)
+			}
+		}
+
+		function avg() {
+			total = 0
+			for (i=0; i < nums.length; i++) {
+				total = total + nums[i]
+			}
+			average = total / nums.length
+
+			document.getElementById("answer").innerHTML = "The average is: " + average
+		}
+	</SCRIPT>
+	<p>Finds the average of all the numbers inputted.</p>
+	
+		<label for="n1">Input a number:</label>
+		<input type="text" id="n1" name="n1"><br><br>
+		<button type="button" onclick="addNum()" id="b1">Add number</button><br><br>
+		<button type="button" onclick="avg()" id="b1">Calculate average</button>
+	
+	<p id="answer">The average is: 0</p>
+</BODY>
+</HTML>
