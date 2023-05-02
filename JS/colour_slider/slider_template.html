@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+	<TITLE>Year 11 SDD</TITLE>
+	<STYLE>
+		body {
+			background-color: rgb(0,0,0);
+			text-align: center;
+		}
+		input {
+			width: 30%;
+			margin-top: 10%;
+		}
+		
+	</STYLE>
+</HEAD>
+<BODY>
+	<SCRIPT>
+		function respond() {
+			var red = document.getElementById("redSlider").value;
+			var green = document.getElementById("greenSlider").value;
+			var blue = document.getElementById("blueSlider").value;
+			
+			var newColor = "rgb(" + red + "," + green + "," + blue + ")";
+			document.body.style.backgroundColor = newColor;
+		}
+	</SCRIPT>
+	<input type="range" min="0" max="255" value="127" id="redSlider" oninput="respond()"> </br>
+	<input type="range" min="0" max="255" value="127" id="greenSlider" oninput="respond()"> </br>
+	<input type="range" min="0" max="255" value="127" id="blueSlider" oninput="respond()"> </br>
+</BODY>
+</HTML>
