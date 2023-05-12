@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>Google Drive</title>
+</head>
+<body>
+	<canvas id="myCanvas" width="800" height="600"></canvas>
+	<script>
+		var canvas = document.getElementById("myCanvas");
+		var ctx = canvas.getContext("2d");
+
+		function draw() {
+			// All of the coordinates are approximates since I'm not bothered to write trig in js
+
+			ctx.beginPath();
+				ctx.moveTo(100, 500);
+				ctx.lineTo(400, 500);
+				ctx.lineTo(350, 413);
+				ctx.lineTo(150, 413);
+				ctx.closePath();
+			ctx.strokeStyle = '#0085ff'
+			ctx.fillStyle = '#0085ff'
+			ctx.stroke();
+			ctx.fill();
+			
+			ctx.beginPath();
+				ctx.moveTo(150, 413);
+				ctx.lineTo(50, 413);
+				ctx.lineTo(100, 500);
+				ctx.closePath();
+			ctx.strokeStyle = '#0066de'
+			ctx.fillStyle = '#0066de'
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.beginPath();
+				ctx.moveTo(350, 413);
+				ctx.lineTo(450, 413);
+				ctx.lineTo(400, 500);
+				ctx.closePath();
+			ctx.strokeStyle = '#ff4131'
+			ctx.fillStyle = '#ff4131'
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.beginPath();
+				ctx.moveTo(350, 413);
+				ctx.lineTo(450, 413);
+				ctx.lineTo(300, 153);
+				ctx.lineTo(250, 240);
+				ctx.closePath();
+			ctx.strokeStyle = '#ffbb00'
+			ctx.fillStyle = '#ffbb00'
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.beginPath();
+				ctx.moveTo(300, 153);
+				ctx.lineTo(200, 153);
+				ctx.lineTo(250, 240);
+				ctx.closePath();
+			ctx.strokeStyle = '#00841e'
+			ctx.fillStyle = '#00841e'
+			ctx.stroke();
+			ctx.fill();
+
+			ctx.beginPath();
+				ctx.moveTo(200, 153);
+				ctx.lineTo(250, 240);
+				ctx.lineTo(150, 413);
+				ctx.lineTo(50, 413);
+				ctx.closePath();
+			ctx.strokeStyle = '#00ae3c'
+			ctx.fillStyle = '#00ae3c'
+			ctx.stroke();
+			ctx.fill();
+			}
+
+		draw()
+
+	</script>
+</body>
+</html>
