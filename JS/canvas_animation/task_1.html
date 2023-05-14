@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>JavaScript Animation Template</title>
+	<style>
+		html {
+			background-color: #DDFFDD;
+		}
+		#canvas {
+			
+			border: solid #000000 4px;
+		}
+		
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="1200" height="600">No canvas available</canvas>
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+
+		function drawRect() {
+			ctx.fillStyle = 'black'
+			ctx.fillRect(100, 100, 100, 100)
+		}
+		
+		function drawBall() {
+			ctx.beginPath();
+				ctx.fillStyle = ball.colour;
+				ctx.arc(ball.xValue, ball.yValue, ball.radius, 0, 2 * Math.PI);
+				ctx.fill();
+			ctx.closePath();
+		}
+		
+		function draw() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			
+			drawBall();			
+			drawRect();
+			ball.xValue += ball.dx;
+			ball.yValue += ball.dy;
+
+			// Bouncing of the edges
+			if ((ball.yValue >= canvas.height - 20) || (ball.yValue <= 20)) {
+				ball.dy = -ball.dy;
+			}
+			if ((ball.xValue >= canvas.width - 20) || (ball.xValue <= 0 + 20)) {
+				ball.dx = -ball.dx;
+			}
+
+			// Bouncing off the rectangle
+			
+			if ((ball.yValue == 100 - 20) || (ball.yValue == 200 + 20)) {
+				if ((100 <= ball.xValue) && (ball.xValue <= 200)) {
+					ball.dy = -ball.dy;
+				}
+			}
+
+			if ((ball.xValue == 100 - 20) || (ball.xValue == 200 + 20)) {
+				if ((100 <= ball.yValue) && (ball.yValue<= 200)) {
+					ball.dx = -ball.dx;
+				}
+			}
+		}
+		
+		var ball = {xValue: 100, yValue: 300, radius: 20, dx: 10, dy: 10, colour:"blue"};
+		var interval = setInterval(draw, 10);
+		
+	</script>	
+	
+</body>
+</html>
