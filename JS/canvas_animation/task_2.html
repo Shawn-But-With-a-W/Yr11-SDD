@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>JavaScript Animation Template</title>
+	<style>
+		html {
+			background-color: #DDFFDD;
+		}
+		#canvas {
+			
+			border: solid #000000 4px;
+		}
+		
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="1200" height="600">No canvas available</canvas>
+	<script>
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var g_const = 9.8;
+		var ball = {xValue: 600, yValue: 0, radius: 20, dx: 0, dy: 0, colour:"blue"};
+		var interval = setInterval(draw, 50);
+		
+		function drawBall() {
+			ctx.beginPath();
+				ctx.fillStyle = ball.colour;
+				ctx.arc(ball.xValue, ball.yValue, ball.radius, 0, 2 * Math.PI);
+				ctx.fill();
+			ctx.closePath();
+		}
+		
+		function draw() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			drawBall();
+			ball.dy = ball.dy + g_const;
+			ball.yValue = ball.yValue + ball.dy;
+
+			// Bouncing of the bottom
+			if (ball.yValue >= canvas.height - 20) {
+				ball.dy = -ball.dy;
+			}
+		
+		
+		}
+	</script>	
+	
+</body>
+</html>
