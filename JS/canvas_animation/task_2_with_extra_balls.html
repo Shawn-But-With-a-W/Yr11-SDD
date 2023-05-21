@@ -1,0 +1,131 @@
+<html>
+<head>
+	<title>JavaScript Animation Template</title>
+	<style>
+		html {
+			background-color: #DDFFDD;
+		}
+		#canvas {
+			
+			border: solid #000000 4px;
+		}
+
+		#zawarudo {
+			width: 75px;
+		}
+		
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="1200" height="600">No canvas available</canvas>
+	
+	<script>
+		class Ball {
+			constructor(xValue, yValue, radius, dx, dy, colour) {
+				this.xValue = xValue;
+				this.yValue = yValue;
+				this.radius = radius;
+				this.dx = dx;
+				this.dy = dy;
+				this.colour = colour;
+			}
+
+			draw() {
+				ctx.beginPath();
+					ctx.fillStyle = this.colour;
+					ctx.arc(this.xValue, this.yValue, this.radius, 0, 2 * Math.PI);
+					ctx.fill();
+				ctx.closePath();
+			}
+
+			move() {
+				this.draw();
+
+				// Horizontal movement
+				if ((this.dx < 10) && (this.dx > 0)) {
+					this.dx = this.dx - 0.2;
+				}
+				else if ((this.dx > -10) && (this.dx < 0)) {
+					this.dx = this.dx + 0.2;
+				}
+				else {
+					this.dx = this.dx * frictionConst;
+				}
+				this.xValue = this.xValue + this.dx;
+				
+				// Vertical movement
+				this.dy = this.dy + gConst;
+				this.yValue = this.yValue + this.dy;
+
+				// Bouncing off the edges
+				if (this.yValue >= canvas.height - this.radius) {
+					this.yValue = canvas.height - this.radius;
+					this.dy = -this.dy;
+				}
+				if (this.yValue <= this.radius) {
+					this.yValue = this.radius;
+					this.dy = -this.dy;
+				}
+				if (this.xValue >= canvas.width - this.radius) {
+					this.xValue = canvas.width - this.radius;
+					this.dx = -this.dx;
+				}
+				if (this.xValue <= this.radius) {
+					this.xValue = this.radius;
+					this.dx = -this.dx;
+				}
+			}
+		}
+
+		function randomInt(lowerBound, upperBound) {
+			var num = Math.floor(Math.random() * (upperBound-lowerBound+1)) + lowerBound;
+
+			if ((lowerBound < 0) && (upperBound > 0)) {
+				if (Math.random() <= 0.5) {
+					return -num;
+				}
+			}
+			return num;
+		}
+
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var frictionConst = 0.96;
+		var gConst = 9.8;
+		var balls = [];
+		var interval = setInterval(update, 50);
+
+		function update() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			// Don't bother doing anything if the ball has been deleted
+			for (var i=0; i<balls.length; i++) {
+				if (balls[i] == 0) {
+					continue;
+				}
+				
+				balls[i].move();
+
+				for (var j=0; j<balls.length; j++) {
+					if (i !== j) {
+						// Using Pythagoras' Theorm to calculate distance between the balls and determine if a collsion has occurred
+						if (Math.pow(balls[i].xValue-balls[j].xValue, 2) + Math.pow(balls[i].yValue-balls[j].yValue, 2) <= Math.pow(balls[i].radius + balls[j].radius, 2)) {
+							balls[i] = 0;
+							balls[j] = 0;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		function newBall() {
+			balls.push(new Ball(randomInt(0, canvas.width), randomInt(0, canvas.height), randomInt(10, 40), randomInt(-50, 50), randomInt(-50, 50), "rgb("+randomInt(0, 255)+","+randomInt(0, 255)+","+randomInt(0, 255)+")"));
+			setTimeout(newBall, 2000);
+		}
+
+		newBall();
+		
+	</script>	
+	
+</body>
+</html>
