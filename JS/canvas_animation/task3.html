@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>What's That Key?</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <h1 id="key-pressed"></h1>
+    <h1 id="key-code"></h1>
+    <h1 id="modifier-key"></h1>
+    <label>Input a keycode (only letters):</label>
+    <input type="text" id="key-code-input" onchange="keyCodeToKey()">
+    <h1 id="key"></h1>
+    <script>
+        document.addEventListener("keydown", findKey)
+
+        function findKey(event) {
+            document.getElementById("key-pressed").innerHTML = "The key was " + event.key;
+            document.getElementById("key-code").innerHTML = "The keycode was " + event.keyCode;
+
+            if (event.ctrlKey) {
+                if (event.location == 1) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Left Control was pressed";
+                }
+                else if (event.location == 2) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Right Control was pressed";
+                }
+                document.getElementById("key-pressed").style.color = "red";
+
+            }
+            else if (event.altKey) {
+                if (event.location == 1) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Left Alt was pressed";
+                }
+                else if (event.location == 2) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Right Alt was pressed";
+                }
+                document.getElementById("key-pressed").style.color = "green";
+            }
+            else if (event.shiftKey) {
+                if (event.location == 1) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Left Shift was pressed";
+                }
+                else if (event.location == 2) {
+                    document.getElementById("modifier-key").innerHTML = "Modifier key Right Shift was pressed";
+                }
+                document.getElementById("key-pressed").style.color = "blue";
+            }
+            else {
+                document.getElementById("key-pressed").style.color = "black";
+                document.getElementById("modifier-key").innerHTML = "";
+            }
+        }
+
+        function keyCodeToKey() {
+            keyCode = document.getElementById("key-code-input").value;
+            if (keyCode !== "") {
+                document.getElementById("key").innerHTML = "Key code " + keyCode + " corresponds to " + String.fromCharCode(keyCode);
+            }
+            else {
+                document.getElementById("key").innerHTML = ""
+            }
+        }
+    </script>
+    
+</body>
+</html>
