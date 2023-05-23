@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Crop Circles</title>
+	<style>
+		html {
+			background-color: #DDFFDD;
+		}
+		#canvas {
+			border: solid #000000 4px;
+		}
+		
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="800" height="600">No canvas available</canvas>
+    <button id="reset" onclick="resetCanvas()">Reset</button>
+    <input type="range" id="zoom-slider" min="-10" max="10" value="0">
+	<script>
+        function randomInt(lowerBound, upperBound) {
+            var num = Math.floor(Math.random() * (upperBound-lowerBound+1)) + lowerBound;
+
+            if ((lowerBound < 0) && (upperBound > 0)) {
+                if (Math.random() <= 0.5) {
+                    return -num;
+                }
+            }
+            return num;
+        }
+
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		
+		document.addEventListener("mousedown", mouseClick);
+				
+		function mouseClick(e) {
+			var x = e.clientX - canvas.offsetLeft + window.pageXOffset + 4;
+			var y = e.clientY - canvas.offsetTop + window.pageYOffset + 4;
+            var r = randomInt(10, 50)
+			var grd = ctx.createRadialGradient(x, y, r*0.1, x, y, r);
+            grd.addColorStop(0, `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`);
+            grd.addColorStop(1, `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`);
+
+            ctx.beginPath();
+                ctx.fillStyle = grd;
+                ctx.arc(x, y, r, 0, 2 * Math.PI);
+                ctx.fill();
+            ctx.endPath();
+		}
+
+        function resetCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        
+				
+	</script>	
+	
+</body>
+</html>
