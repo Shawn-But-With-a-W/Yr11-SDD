@@ -5,17 +5,50 @@
 		html {
 			background-color: #DDFFDD;
 		}
+
 		#canvas {
-			border: solid #000000 4px;
+			margin-top: 100px;
+            border: solid #000000 4px;
 		}
+
+        #zoom-slider {
+            left: 60px;
+            position: absolute;
+        }
+
+        #reset {
+            position: absolute;
+        }
 		
 	</style>
 </head>
 <body>
-	<canvas id="canvas" width="800" height="600">No canvas available</canvas>
+    <input type="range" id="zoom-slider" min="-10" max="10" value="0" oninput="zoom()">
     <button id="reset" onclick="resetCanvas()">Reset</button>
-    <input type="range" id="zoom-slider" min="-10" max="10" value="0">
+	<canvas id="canvas" width="800" height="600">No canvas available</canvas>
 	<script>
+        class Circle {
+            constructor(xRel, yRel, rRel, color1, color2) {
+                this.xRel = xRel;
+                this.yRel = yRel;
+                this.rRel = rRel;
+                this.color1 = color1;
+                this.color2 = color2;
+            }
+
+            draw() {
+                var grd = ctx.createRadialGradient(this.xRel*canvas.width, this.yRel*canvas.height, this.rRel*canvas.width*0.2, this.xRel*canvas.width, this.yRel*canvas.height, this.rRel*canvas.width);
+                grd.addColorStop(0, this.color1);
+                grd.addColorStop(1, this.color2);
+ 
+                ctx.beginPath();
+                    ctx.fillStyle = grd;
+                    ctx.arc(this.xRel*canvas.width, this.yRel*canvas.height, this.rRel*canvas.width, 0, 2*Math.PI);
+                    ctx.fill();
+                ctx.closePath();
+            }
+        }
+
         function randomInt(lowerBound, upperBound) {
             var num = Math.floor(Math.random() * (upperBound-lowerBound+1)) + lowerBound;
 
@@ -27,32 +60,39 @@
             return num;
         }
 
+
 		var canvas = document.getElementById("canvas");
 		var ctx = canvas.getContext("2d");
+        var circles = [];
 		
 		document.addEventListener("mousedown", mouseClick);
 				
 		function mouseClick(e) {
 			var x = e.clientX - canvas.offsetLeft + window.pageXOffset + 4;
 			var y = e.clientY - canvas.offsetTop + window.pageYOffset + 4;
-            var r = randomInt(10, 50)
-			var grd = ctx.createRadialGradient(x, y, r*0.1, x, y, r);
-            grd.addColorStop(0, `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`);
-            grd.addColorStop(1, `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`);
-
-            ctx.beginPath();
-                ctx.fillStyle = grd;
-                ctx.arc(x, y, r, 0, 2 * Math.PI);
-                ctx.fill();
-            ctx.endPath();
+            var rRel = Math.random() * 0.06 + 0.01;
+            var color1 = `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`
+            var color2 = `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`
+			
+            circle = new Circle(x/canvas.width, y/canvas.height, rRel, color1, color2);
+            circle.draw();
+            circles.push(circle);
 		}
 
         function resetCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            circles = [];
         }
-
-        
 				
+        function zoom() {
+            zoom_level = (document.getElementById("zoom-slider").value * 0.1 + 1);
+            canvas.height = 600 * zoom_level;
+            canvas.width = 800 * zoom_level;
+
+            for (var i=0; i<circles.length; i++) {
+                circles[i].draw();
+            }
+        }
 	</script>	
 	
 </body>
