@@ -85,9 +85,9 @@
         }
 				
         function zoom() {
-            zoom_level = (document.getElementById("zoom-slider").value * 0.1 + 1);
-            canvas.height = 600 * zoom_level;
-            canvas.width = 800 * zoom_level;
+            zoomLevel = (document.getElementById("zoom-slider").value * 0.1 + 1);
+            canvas.height = 600 * zoomLevel;
+            canvas.width = 800 * zoomLevel;
 
             for (var i=0; i<circles.length; i++) {
                 circles[i].draw();
