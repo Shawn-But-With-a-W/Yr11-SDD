@@ -6,7 +6,7 @@ function floodAdjacent(col, row) {
     if ((col-1 >= 0) && (grid[col-1][row].Flood)){
         flooded = true;
     }
-    if ((row+1 <= 0) && (grid[col][row+1].Flood)){
+    if ((row+1 <= userSettings.size) && (grid[col][row+1].Flood)){
         flooded = true;
     }
     if ((row-1 >= 0) && (grid[col][row-1].Flood)){
