@@ -1,0 +1,53 @@
+Functions List:
+	[run on start-up and when new game button is clicked]
+	initialise ()
+			updateSettings()
+				update the global settings variable with the data from the drop-downs
+			generateGrid ()
+				Reset the grid (set length to 0), and then create a 2D array of the size specified by the userSettings
+				Set each element of the 2D array to a record containing a random colour and Flood Boolean
+
+					randomColour()
+						Return a random colour from a list of options
+
+	EVENT: selectColour (Event)
+		Use the x and y coordinates from the Event to determine which cell was clicked
+		Identify the colour of the clicked cell
+	
+			changeGridColour(colour)
+				Iterate through each cell, update all Flooded cells to be colour
+			
+			expandGrid(colour)
+				Iterate through the grid and identify any cells that are colour and are directly adjacent to a Flood cell
+				Set the Flooded value of these to True
+				
+					floodAdjacent(r,c)
+						For a cell at (row, column), return True if it is of colour, not active, and any directly adjacent cells (N/S/E/W) are Flooded
+			
+			
+			advanceTurn()
+				get the number of turns from the HTML element, increment, update the HTML
+				
+
+			gameWin()
+				Calculate the number of cells in the grid and compare to the count of Flooded cells
+				Return True/False
+				
+					countFloodedCells()
+						Return the number of cells in the grid that have Flooded set as 'true' 
+			
+			[If the game has been won]
+			displayOutcome()
+				Access the HTML element with id "Outcome", change the text to display a congratulatory message
+
+
+	displayGrid ()
+		update the display
+		
+	
+
+GLOBALS	
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext("2d");
+	var userSettings = {size:12,colours:5,cellSize:40};
+	var grid = [];

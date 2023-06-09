@@ -1,0 +1,138 @@
+GLOBALS	
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext("2d");
+var userSettings = {size:12,colours:5,cellSize:40};
+var grid = [];
+// Each cell in the grid is a record with the form:
+	{color: <string>, Flood: <Boolean>}
+
+
+	BEGIN updateSettings()
+		userSettings.colours = GET value from HTML id "ColoursDrop"
+		userSettings.size = GET value from HTML "SizeDropDrop"
+		userSettings.cellSize = 480 / userSettings.size
+	END
+	
+	BEGIN generateGrid ()
+		grid.length = 0
+		FOR i = 0 TO userSettings.size STEP 1
+			row = []
+			FOR j = 0 TO userSettings.size STEP 1
+				rc = randomColour()	
+				append {color: rc, Flood: false} to row
+			NEXT j
+			append row to grid
+		NEXT i
+	END
+	
+	BEGIN randomColour 
+		colours = ["green", "purple", "red", "cyan", "peach", "yellow", "magenta", "pink"]
+		randIndex = random number between 0 and userSettings.colours
+		return colours[randIndex]
+	END
+
+	BEGIN selectColour (Event)
+		GET MousePositionX from Event
+		GET MousePositionY from Event
+		column = MousePositionX / userSettings.cellSize
+		row = MousePositionY / userSettings.cellSize
+		cColour = grid[row][column].color
+		
+		IF cColour != grid[0][0].color
+			changeGridColour(cColour)
+			advanceTurn()
+			IF gameWin() THEN
+				displayOutcome()
+			ENDIF
+		ENDIF
+	END
+	
+	
+	BEGIN changeGridColour(colour)
+		FOR row = 0 TO grid.length STEP 1
+			FOR colomn = 0 TO grid[row].length STEP 1
+				IF grid[row][colomn].Flood THEN
+					SET grid[row][colomn].colour = colour
+				ENDIF
+			NEXT row
+		NEXT colomn
+	END
+	
+	BEGIN expandGrid(colour)
+		FOR row = 0 TO length of grid STEP 1
+			FOR col = 0 TO length of row STEP 1
+				IF grid[row][col].Flood == False THEN
+					IF grid[row][col].color = colour
+						IF floodAdjacent(row,col) THEN
+							grid[row][col].Flood = TRUE
+						ENDIF
+					ENDIF
+				ENDIF
+			NEXT row
+		NEXT col
+	END
+	
+	BEGIN floodAdjacent(col,row)
+		flooded = false
+		IF col+1 <= userSettings.size THEN
+			IF grid[col+1][row].Flood THEN 
+				flooded = true
+			ENDIF
+		IF col-1 >= 0 THEN
+			IF (grid[col-1][row].Flood THEN 
+				flooded = true 
+			ENDIF
+		IF row+1 <= userSettings.size  THEN
+			IF grid[col][row+1].Flood THEN
+				flooded = true
+			ENDIF
+		IF row-1 >= 0 THEN
+			IF grid[col][row-1].Flood THEN 
+				flooded = true 
+			ENDIF
+		ENDIF
+		RETURN flooded
+	END	
+
+
+	BEGIN advanceTurn
+		turns = GET value from HTML id "Turns"
+		turns++
+		SET value of HTML id "Turns" = turns
+	END
+
+	BEGIN gameWin
+		total = userSettings.size * userSettings.size
+		return countFloodedCells() == total
+	END
+
+	BEGIN countFloodedCells()
+		flooded = 0
+		FOR row = 0 TO userSettings.size STEP1
+			FOR cell = 0 TO userSettings.size STEP1
+				IF grid[row][cell].Flood = True THEN
+					flooded +=1
+				ENDIF
+			NEXT cell
+		NEXT row
+		return flooded
+	END
+
+	BEGIN displayOutcome
+		access the HTML element with id "Outcome"
+		change the text to display a congratulatory message
+	END
+
+
+	BEGIN displayGrid
+		FOR row = 0 TO userSettings.size STEP1
+			FOR col = 0 TO userSettings.size STEP1
+				colour = grid[row][col].color
+				size = userSettings.cellSize
+				x = col * size
+				y = row * size
+				draw rectangle (x,y,size,size)
+			NEXT col
+		NEXT row
+	END
+
