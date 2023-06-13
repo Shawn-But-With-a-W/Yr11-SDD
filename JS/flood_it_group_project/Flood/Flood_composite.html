@@ -1,0 +1,45 @@
+<HTML>
+	<HEAD>
+		<TITLE>Flood!</TITLE>
+		<link rel="stylesheet" href="flood_style.css">
+		<script src="flood_comp.js" defer></script>
+	</HEAD>
+	<BODY>
+		<header>
+			<h1>FLOOD</h1>
+			<h2>Created by 11SDD</h2>
+		</header>		
+		<div id="main">
+			<div id="game">
+				<canvas id="canvas" width="480" height="480"></canvas>
+			</div>
+			<div id="info">
+				<p id="Outcome">Moves: <span id="Turns">0</span></p>
+				<p id="sizeSelection">
+					<label for="SizeDrop">Board size: </label>
+					<select id="SizeDrop">
+						<option value="4"> 4x4 </option>
+						<option value="8"> 8x8 </option>
+						<option value="12" selected> 12x12 </option>
+						<option value="16"> 16x16 </option>
+						<option value="20"> 20x20 </option>
+					</select>
+				</p>
+				<p id="colorsSelection">
+					<label for="SizeDrop">Number of colours: </label>
+					<select id="ColorsDrop">
+						<option value="3"> 3 </option>
+						<option value="4"> 4 </option>
+						<option value="5"> 5 </option>
+						<option value="6" selected> 6 </option>
+						<option value="7"> 7 </option>
+						<option value="8"> 8 </option>
+					</select>
+				</p>
+				<p id="buttonTime">
+					<button type="button" onclick="initialise()">New Game</button>
+				</p>
+			</div>
+		</div>
+	</BODY>
+</HTML>
